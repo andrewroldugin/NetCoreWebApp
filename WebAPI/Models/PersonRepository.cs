@@ -12,7 +12,12 @@ namespace WebAPI.Models
     public class PersonRepository
     {
         //string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        string connectionString = "server=127.0.0.1;uid=root;pwd=root;database=persons";
+        public string connectionString = "server=127.0.0.1;uid=root;pwd=root;database=persons";
+        public IDbConnection Connect()
+        {
+            return new MySqlConnection(connectionString);
+        }
+
         public List<Person> GetPersons()
         {
             List<Person> persons = new List<Person>();
