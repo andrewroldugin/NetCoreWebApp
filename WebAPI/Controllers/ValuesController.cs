@@ -37,6 +37,7 @@ namespace WebAPI.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Person value)
         {
+            value.id = id;
             repo.Update(value);
         }
 
