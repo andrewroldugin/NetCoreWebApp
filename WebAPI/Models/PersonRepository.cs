@@ -21,7 +21,7 @@ namespace WebAPI.Models
         public List<Person> GetPersons()
         {
             List<Person> persons = new List<Person>();
-            using(IDbConnection db = new MySqlConnection(connectionString))
+            using(var db = Connect())
             {
                 persons = db.Query<Person>("SELECT * FROM tblPersons").ToList();
             }
@@ -31,7 +31,7 @@ namespace WebAPI.Models
         public Person Get(int id)
         {
             Person person = null;
-            using (IDbConnection db = new MySqlConnection(connectionString))
+            using (var db = Connect())
             {
                 person = db.Query<Person>("SELECT * FROM tblPersons WHERE id = @id", new { id }).FirstOrDefault();
             }
@@ -40,7 +40,7 @@ namespace WebAPI.Models
  
         public Person Create(Person person)
         {
-            using (IDbConnection db = new MySqlConnection(connectionString))
+            using (var db = Connect())
             {
                 var sqlQuery = "INSERT INTO tblPersons VALUES(0, @first_name, @last_name, @phone); SELECT LAST_INSERT_ID()";
                 person.id = db.Query<int>(sqlQuery, person).FirstOrDefault();
@@ -50,7 +50,7 @@ namespace WebAPI.Models
  
         public void Update(Person person)
         {
-            using (IDbConnection db = new MySqlConnection(connectionString))
+            using (var db = Connect())
             {
                 var sqlQuery = "UPDATE tblPersons SET first_name = @first_name, last_name = @last_name, phone = @phone WHERE id = @id";
                 db.Execute(sqlQuery, person);
@@ -59,7 +59,7 @@ namespace WebAPI.Models
  
         public void Delete(int id)
         {
-             using (IDbConnection db = new MySqlConnection(connectionString))
+             using (var db = Connect())
              {
                  var sqlQuery = "DELETE FROM tblPersons WHERE id = @id";
                  db.Execute(sqlQuery, new { id });
