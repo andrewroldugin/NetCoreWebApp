@@ -28,24 +28,27 @@ namespace WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Person value)
+        public Person Post([FromBody]Person value)
         {
-            repo.Create(value);
+            return repo.Create(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Person value)
+        public Person Put(int id, [FromBody]Person value)
         {
             value.id = id;
             repo.Update(value);
+            return value;
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Person Delete(int id)
         {
             repo.Delete(id);
+            // server expects some result, let's return null
+            return null;
         }
     }
 }

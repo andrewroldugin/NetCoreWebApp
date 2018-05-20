@@ -1,1 +1,85 @@
-Hello World
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>test</title>
+
+    <script src="vue.min.js"></script>
+    <script src="axios.min.js"></script>
+    <script src="main.js"></script>
+    <link href="main.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="contacs-app">
+  <section v-if="errored">
+    <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+  </section>
+  <section v-else-if="!errored && loading">Loading...</section>
+  <section v-else>
+      <div class="errors"
+         v-if="errors.length">
+        <b>Some error(s) occured:</b>
+        <ul>
+          <li v-for="error in errors">{{ error }}</li>
+        </ul>
+      </div>
+      <form
+        v-on:submit.prevent="addRecord">
+        <div class="contacts-row">
+            <input
+              v-model.trim="new_record.first_name"
+              v-bind:disabled="edit_mode"
+              placeholder="First name"
+              type="text"
+            >
+            <input
+              v-model.trim="new_record.last_name"
+              v-bind:disabled="edit_mode"
+              placeholder="Last name"
+              type="text"
+            >
+            <input
+              v-model.trim="new_record.phone"
+              v-bind:disabled="edit_mode"
+              placeholder="Phone"
+              type="tel"
+            >
+            <button v-bind:disabled="edit_mode">Add</button>
+        </div>
+      </form>
+      <div class="contacts-list">
+        <div
+          class="contacts-row"
+          v-for="(item, index) in items"
+          v-bind:key="item.id">
+          <editable-span
+            v-bind:edit="edit_id==item.id"
+            v-model="item.first_name"
+            v-bind:type="'text'"></editable-span>
+          <editable-span
+            v-bind:edit="edit_id==item.id"
+            v-model="item.last_name"
+            v-bind:type="'text'"
+            ></editable-span>
+          <editable-span
+            v-bind:edit="edit_id==item.id"
+            v-model="item.phone"
+            v-bind:type="'tel'"
+            ></editable-span>
+
+            <button
+                    v-if="edit_id!=item.id"
+                    v-on:click="editRecordStart(index, item.id)"
+                    v-bind:disabled="edit_mode">Edit</button>
+            <button v-if="edit_id!=item.id" v-on:click="removeRecord(index, item.id)"
+                    v-bind:disabled="edit_mode">Remove</button>
+            <button v-if="edit_id==item.id" v-on:click="editRecordDone(item)">Done</button>
+            <button v-if="edit_id==item.id" v-on:click="editRecordCancel(item)">Cancel</button>
+        </div>
+      </div>
+  </section>
+</div>
+
+</body>
+</html>

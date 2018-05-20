@@ -1,0 +1,24 @@
+#contacs-app {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contacts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 75px 75px;
+    grid-gap: 10px;
+
+    margin-bottom: 10px;
+}
+
+.contacts-list span {
+    border: 1px solid gray;
+}
+
+.errors {
+    color: white;
+    background-color: #F15858;
+    padding: 10px;
+    margin-bottom: 15px;
+}
