@@ -18,6 +18,7 @@ namespace Tests.Models
         [SetUp]
         public void Setup()
         {
+            repo.connectionString = "server=127.0.0.1;uid=root;pwd=root;database=persons_test";
         }
 
         [TearDown]
